@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cxf="http://cxf.apache.org/core" xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://cxf.apache.org/core 
+         http://cxf.apache.org/schemas/core.xsd ">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.linedata.lms"/>
+    <cxf:bus>
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="logOutInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:bus>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+    <import resource="classpath*:spring/CodifUtilityServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/codifUtilityService.service-api.spring.xml"/>
+    <import resource="classpath*:spring/LovDao.spring.xml"/>
+    <import resource="classpath*:spring/LovJobFunctionDao.spring.xml"/>
+    <import resource="classpath*:spring/lov.service-api.spring.xml"/>
+    <import resource="classpath*:spring/LovServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/data.service-api.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/setup/dao/spring/NonWfActionDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/setup/dao/spring/NonWfActionDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/ContractDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/ContractDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/setup/dao/spring/AdmPartiesDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/setup/dao/spring/AdmPartiesDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/BusinessPartwwDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/BusinessPartwwDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/ThirdPartyRoleDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/ThirdPartyRoleDao.spring.xml"/>
+    <import resource="classpath*:spring/EtdMessageDaoImpl.spring.xml"/>
+    <import resource="classpath*:spring/ControlFieldImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawMinorModificationDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawMinorModificationDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/iplan/setup/dao/spring/CalendarDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/iplan/setup/dao/spring/CalendarDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownAdditionalMarginDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownCalendarDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderDetailDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderPortfolioDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownAdditionalMarginInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownCalendarInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderDetailInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderPortfolioInternalDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownAdditionalMarginDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownCalendarDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderDetailDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/DrawdownLenderPortfolioDaoImpl.spring.xml"/>
+
+<!--    -->
+
+    <import resource="classpath*:com/linedata/ekip/std/services/deal/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/facility/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/guarantee/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/drawdown/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/transaction/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/invoicing/setup/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/management/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/*Dao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/dbproc/spring/*.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/deal/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/facility/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/guarantee/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/drawdown/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/transaction/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/workflow/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/invoicing/setup/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/management/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/acquisition/dao/spring/*DaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/codification/setup/dao/spring/ParamIntTranscDao.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/codification/setup/dao/spring/ParamIntTranscDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/AddressDaoImpl.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/party/dao/spring/AddressDao.spring.xml"/>
+
+
+<!--    -->
+
+    <import resource="classpath*:spring/calendar.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/Calendar.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanPayment.service-api.spring.xml"/>
+    <import resource="classpath*:spring/capitalfinancialschedule.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/syndloanguarantee.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/deal.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/fee.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/drawdown.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/facility.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/contact.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/remittanceinstructions.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/lender.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/transaction.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/syndloanasset.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/syndloanguarantee.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/exigibleheader.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/interest.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/party.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/cashflow.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/accounting.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/request.entity-ref.spring.xml"/>
+    <import resource="classpath*:spring/parameter.entity-ref.spring.xml"/>
+    <import resource="classpath*:com/linedata/ekip/std/services/**/service.impl.spring.xml"/>
+    <import resource="classpath*:spring/CodifUtilityServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/CalendarServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/LoanDrawdownServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/LenderServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/FacilityServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/PortfolioCapitalScheduleServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ScheduleCommitmentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanCapitalServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/DrawdownServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/FinancialEngineServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/FeeServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/RemittanceInstructionsServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ContactServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ConvertedUtilitiesServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/DealServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/LimitServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ScheduleCommitmentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ExchangeRateServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/InterestCycleServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/PartyServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/InterestCycleServiceImpl.spring.xml"/>
+    <import resource="classpath*:dbproc/*.spring.xml"/>
+    <import resource="classpath*:spring/Drawdown.service-api.spring.xml"/>
+    <import resource="classpath*:spring/CapitalSchedule.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Deal.service-api.spring.xml"/>
+    <import resource="classpath*:spring/DealFee.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Facility.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Fee.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Lender.service-api.spring.xml"/>
+    <import resource="classpath*:spring/ScheduleCommitment.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanCapital.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanGuarantee.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Limit.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Contact.service-api.spring.xml"/>
+    <import resource="classpath*:spring/RemittanceInstructions.service-api.spring.xml"/>
+    <import resource="classpath*:spring/codifUtilityService.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanAsset.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Transaction.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanGuarantee.service-api.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanPayment.service-api.spring.xml"/>
+    <import resource="classpath*:spring/InterestCycle.service-api.spring.xml"/>
+    <import resource="classpath*:spring/CashFlow.service-api.spring.xml"/>
+    <import resource="classpath*:spring/accounting.service-api.spring.xml"/>
+    <import resource="classpath*:spring/Request.service-api.spring.xml"/>
+    <import resource="classpath*:spring/LoanDrawdownServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/TransactionServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/LenderServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/FacilityServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/PortfolioCapitalScheduleServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ScheduleCommitmentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/TransactionAuditDetailImpl.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanAssetServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanGuaranteeServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/UnpaidPaymentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/UnpaidPaymentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/SyndLoanPaymentServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/InterestCycleServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/CashFlowServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/AccountingServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/SyndloanDataExtractorServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/ParameterServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/RequestServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/RequestLinkServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/RequestParameterServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/PartyManagementBeanMapper.spring.xml"/>
+    <import resource="classpath*:spring/AddressServiceImpl.spring.xml"/>
+
+    <import resource="classpath*:spring/database.spring.xml"/>
+    <import resource="cache.spring.xml"/>
+    <import resource="classpath*:spring/UserContextServiceImpl.spring.xml"/>
+    <import resource="classpath*:spring/service.cache.spring.xml"/>
+    <import resource="classpath*:spring/data.service-api.spring.xml"/>
+    <import resource="../../database.spring.xml"/>
+    <import resource="../../annotation.spring.xml"/>
+    <import resource="batch.job.spring.xml"/>
+    <import resource="classpath*:com/linedata/framework/batch/default.config.spring.xml"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    <bean id="logOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+    <bean id="DealService" class="com.linedata.ekip.std.services.deal.service.impl.DealServiceImpl">
+        <property name="mapper" ref="DealBeanMapper"/>
+    </bean>
+    <bean id="ServerSetup" class="com.linedata.ekip.core.server.setup.ServerSetup">
+        <property name="defaultLanguageCode">
+            <value>en</value>
+        </property>
+    </bean>
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository"/>
+    </bean>
+    <bean id="DealFactory" class="com.linedata.ekip.std.services.entity.factory.DealFactory">
+        <property name="className" value="com.linedata.ekip.std.services.deal.entity.impl.DealImpl"/>
+    </bean>
+
+    <bean id="WorkflowProcessReferenceFactory"
+          class="com.linedata.ekip.std.services.entity.workflowprocess.factory.WorkflowProcessReferenceFactory">
+        <property name="className"
+                  value="com.linedata.ekip.std.services.transaction.service.impl.TransactionServiceImpl"/>
+    </bean>
+
+    <bean id="ServicingCompanyUtilisDao"
+          class="com.linedata.ekip.std.services.network.dao.impl.ServicingCompanyUtilisDaoImpl">
+        <property name="frameworkJdbcTemplate" ref="ekipDaoTemplate"/>
+        <property name="rowMapper" ref="ServicingCompanyUtilisRowMapper"/>
+        <property name="sqlSelectorMap" ref="ServicingCompanyUtilisSelectorMap"/>
+        <property name="beanFactory" ref="ServicingCompanyUtilisModelFactory"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisRowMapper"
+          class="com.linedata.ekip.std.services.network.dao.impl.ServicingCompanyUtilisRowMapper">
+        <property name="objectResultSetExtractor" ref="ServicingCompanyUtilisResultSetExtractor"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisSelectorMapAbstract" class="org.springframework.beans.factory.config.MapFactoryBean"
+          abstract="true">
+        <property name="sourceMap">
+            <map>
+                <entry key="findModelByReference">
+                    <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ServicingCompanyUtilisSelector.sql"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ServicingCompanyUtilisSelectorMap" class="org.springframework.beans.factory.config.MapFactoryBean" parent="ServicingCompanyUtilisSelectorMapAbstract">
+        <property name="sourceMap">
+            <map merge="true">
+                <entry key="getServicingCompanyUtilisList">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ServicingCompanyUtilisListSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getServicingCompanyParemetering">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ServicingCompanyParemeteringSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getServicingCompanyUtilisByCodes">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ServicingCompanyUtilisByCodesSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getServicingCompanyByDealOrCollatParameters">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ServicingCompanyByDealOrCollatParametersSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAuthorizedHostbankByDealAndServicingCompany">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/AuthorizedHostbankByDealAndServicingCompanySelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getUserProfileListByFunctionalArea">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/UserProfileListByFunctionalAreaSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getEntityActionListByProfile">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/EntityActionListByProfileSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getScreenByProfile">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ScreenByProfileSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getActionByProfile">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:network/sql/ActionByProfileSelector.sql"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ServicingCompanyUtilisResultSetExtractor"
+          class="com.linedata.ekip.std.services.network.dao.impl.ServicingCompanyUtilisResultSetExtractor">
+        <property name="beanFactory" ref="ServicingCompanyUtilisModelFactory"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisModelFactory" class="com.linedata.ekip.std.services.network.model.ServicingCompanyUtilisModelFactory">
+        <property name="className" value="com.linedata.ekip.std.services.network.model.impl.ServicingCompanyUtilisModelImpl"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisWorkModelFactory"
+          class="com.linedata.ekip.std.services.network.model.ServicingCompanyUtilisWorkModelFactory">
+        <property name="className"
+                  value="com.linedata.ekip.std.services.network.model.impl.ServicingCompanyUtilisWorkModelImpl"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisModelReferenceFactory"
+          class="com.linedata.ekip.std.services.network.model.ServicingCompanyUtilisModelReferenceFactory">
+        <property name="className"
+                  value="com.linedata.ekip.std.services.network.model.impl.ServicingCompanyUtilisModelReferenceImpl"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisInternalModelFactory"
+          class="com.linedata.ekip.std.services.network.internal.model.ServicingCompanyUtilisInternalModelFactory">
+        <property name="className"
+                  value="com.linedata.ekip.std.services.network.internal.model.impl.ServicingCompanyUtilisInternalModelImpl"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisInternalModelReferenceFactory"
+          class="com.linedata.ekip.std.services.network.internal.model.ServicingCompanyUtilisInternalModelReferenceFactory">
+        <property name="className"
+                  value="com.linedata.ekip.std.services.network.internal.model.impl.ServicingCompanyUtilisInternalModelReferenceImpl"/>
+    </bean>
+    <bean id="ServicingCompanyUtilisInternalDaoGen"
+          class="com.linedata.ekip.std.services.network.internal.dao.impl.ServicingCompanyUtilisInternalDaoImplGen">
+        <property name="frameworkJdbcTemplate" ref="ekipDaoTemplate"/>
+        <property name="beanFactory" ref="ServicingCompanyUtilisInternalModelFactory"/>
+        <property name="sqlInsertExecutor">
+            <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                <constructor-arg type="java.io.InputStream"
+                                 value="classpath:network/sql/ServicingCompanyUtilisInsertExecutor.sql"/>
+            </bean>
+        </property>
+        <property name="sqlUpdateExecutor">
+            <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                <constructor-arg type="java.io.InputStream"
+                                 value="classpath:network/sql/ServicingCompanyUtilisUpdateExecutor.sql"/>
+            </bean>
+        </property>
+        <property name="sqlDeleteExecutor">
+            <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                <constructor-arg type="java.io.InputStream"
+                                 value="classpath:network/sql/ServicingCompanyUtilisDeleteExecutor.sql"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="ServicingCompanyUtilisController"
+          class="com.linedata.ekip.std.services.network.control.impl.ServicingCompanyUtilisControllerImpl">
+    </bean>
+
+    <bean id="ThirdPartyAdrwwDao" class="com.linedata.ekip.std.services.party.dao.impl.ThirdPartyAdrwwDaoImpl">
+        <property name="frameworkJdbcTemplate" ref="ekipDaoTemplate"/>
+        <property name="rowMapper" ref="ThirdPartyAdrwwRowMapper"/>
+        <property name="sqlSelectorMap" ref="ThirdPartyAdrwwSelectorMap"/>
+        <property name="beanFactory" ref="ThirdPartyAdrwwModelFactory"/>
+    </bean>
+    <bean id="ThirdPartyAdrwwRowMapper" class="com.linedata.ekip.std.services.party.dao.impl.ThirdPartyAdrwwRowMapper">
+        <property name="objectResultSetExtractor" ref="ThirdPartyAdrwwResultSetExtractor"/>
+    </bean>
+    <bean id="ThirdPartyAdrwwSelectorMapAbstract" class="org.springframework.beans.factory.config.MapFactoryBean"
+          abstract="true">
+        <property name="sourceMap">
+            <map>
+                <entry key="findModelByReference">
+                    <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAdrwwSelector.sql"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ThirdPartyAdrwwResultSetExtractor" class="com.linedata.ekip.std.services.party.dao.impl.ThirdPartyAdrwwResultSetExtractor">
+        <property name="beanFactory" ref="ThirdPartyAdrwwModelFactory"/>
+    </bean>
+    <bean id="ThirdPartyAdrwwSelectorMap" parent="ThirdPartyAdrwwSelectorMapAbstract" class="org.springframework.beans.factory.config.MapFactoryBean" >
+        <property name="sourceMap">
+            <map merge="true">
+                <entry key="getAddress">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream" value="classpath:party/sql/AddressSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getThirdPartyAddress">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAddressSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getThirdPartyAddressAdvanced">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAddressSelectorAdvanced.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAddressForAuthorityZone">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/AddressForAuthorityZoneSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAdresseWw">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAdrwwSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getThirdPartyAddressSearch">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAddressSearchSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAdresseWwBySocGesReference">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAdrwwListSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAdresseWwOfSocGes">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAdrwwSelector.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getAdresseWwOfSocGesBySocGesReference">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAdrwwListSelector.sql"/>
+                    </bean>
+                </entry>
+
+                <entry key="getAddressStatusOfHistory">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/AddressStatusOfHistory.sql"/>
+                    </bean>
+                </entry>
+
+                <entry key="getZoneTownByPostalCode">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/GetZoneTownByPostalCode.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getPayerPartyAddressNr">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream" value="classpath:party/sql/PayerPartyAddress.sql"/>
+                    </bean>
+                </entry>
+                <entry key="getThirdPartyAddressAdm">
+                    <bean factory-method="toString" class="org.apache.commons.io.IOUtils">
+                        <constructor-arg type="java.io.InputStream"
+                                         value="classpath:party/sql/ThirdPartyAddressAdmSelector.sql"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="ThirdPartyAdrwwModelFactory" class="com.linedata.ekip.std.services.party.model.ThirdPartyAdrwwModelFactory">
+        <property name="className" value="com.linedata.ekip.std.services.party.model.impl.ThirdPartyAdrwwModelImpl"/>
+    </bean>
+
+    <bean id="Party" class="com.linedata.ekip.party.management.party.entity.impl.PartyImpl"/>
+    <bean id="PartyFactory" class="com.linedata.ekip.party.management.party.entity.factory.PartyFactory"/>
+    <bean id="PartyDriverFactory" class="com.linedata.ekip.party.management.party.entity.factory.PartyDriverFactory"></bean>
+    <bean id="QueryMapResponseFactory" class="com.linedata.ekip.finderService.factory.QueryMapResponseFactory"></bean>
+    <bean id="PartyBankrefModelFactory" class="com.linedata.ekip.std.services.party.model.PartyBankrefModelFactory"></bean>
+    <bean id="BankAccountReferenceFactory" class="com.linedata.ekip.party.management.bankAccountReference.entity.factory.BankAccountReferenceFactory"></bean>
+    <bean id="PartyBankrefDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyBankrefDaoImpl"></bean>
+    <bean id="PartyBankrefwwDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyBankrefwwDaoImpl"/>
+    <bean id="PartyArcBarWwDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyArcBarWwDaoImpl"></bean>
+    <bean id="BankBranchwwDao" class="com.linedata.ekip.std.services.party.dao.impl.BankBranchwwDaoImpl"></bean>
+    <bean id="CommrefModelFactory" class="com.linedata.ekip.std.services.party.model.CommrefModelFactory"></bean>
+    <bean id="SalesPartyNetModelFactory" class="com.linedata.ekip.std.services.network.model.SalesPartyNetModelFactory"></bean>
+    <bean id="PartyBrandModelFactory" class="com.linedata.ekip.std.services.party.model.PartyBrandModelFactory"></bean>
+    <bean id="ThirdPartyContactModelFactory" class="com.linedata.ekip.std.services.party.model.ThirdPartyContactModelFactory"></bean>
+    <bean id="PartyTownsModelFactory" class="com.linedata.ekip.std.services.party.model.PartyTownsModelFactory"></bean>
+    <bean id="PartyContactFactory" class="com.linedata.ekip.party.management.party.entity.factory.PartyContactFactory"></bean>
+    <bean id="AuthorityZoneFactory" class="com.linedata.ekip.party.management.party.entity.factory.AuthorityZoneFactory"></bean>
+    <bean id="RtbfRequestDao" class="com.linedata.ekip.std.services.party.dao.impl.RtbfRequestDaoImpl"></bean>
+    <bean id="DriverThirdDao" class="com.linedata.ekip.std.services.party.dao.impl.DriverThirdDaoImpl"></bean>
+    <bean id="PartyBrandDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyBrandDaoImpl"></bean>
+    <bean id="DriverThirdModelFactory" class="com.linedata.ekip.std.services.party.model.DriverThirdModelFactory"></bean>
+    <bean id="CritobjPartyDao" class="com.linedata.ekip.std.services.party.dao.impl.CritobjPartyDaoImpl"></bean>
+    <bean id="PartyTownsDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyTownsDaoImpl"></bean>
+    <bean id="CommrefDao" class="com.linedata.ekip.std.services.party.dao.impl.CommrefDaoImpl"></bean>
+    <bean id="PartyIdentwwDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyIdentwwDaoImpl"></bean>
+    <bean id="PartyRelationDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyRelationDaoImpl"></bean>
+    <bean id="PartyRatingDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyRatingDaoImpl"></bean>
+    <bean id="ThirdPartyContactDao" class="com.linedata.ekip.std.services.party.dao.impl.ThirdPartyContactDaoImpl"></bean>
+    <bean id="ModIdentPartywwDao" class="com.linedata.ekip.std.services.party.dao.impl.ModIdentPartywwDaoImpl"></bean>
+    <bean id="IndividualPartyDao" class="com.linedata.ekip.std.services.party.dao.impl.IndividualPartyDaoImpl"></bean>
+    <bean id="SalesPartyNetDao" class="com.linedata.ekip.std.services.network.dao.impl.SalesPartyNetDaoImpl"></bean>
+    <bean id="AnteriorityCalcDao" class="com.linedata.ekip.std.services.party.dao.impl.AnteriorityCalcDaoImpl"></bean>
+    <bean id="AnteriorityCalcModelFactory" class="com.linedata.ekip.std.services.party.model.AnteriorityCalcModelFactory"></bean>
+    <bean id="BrokerPortfolioForPeriodFactory" class="com.linedata.ekip.party.management.party.entity.factory.BrokerPortfolioForPeriodFactory"></bean>
+    <bean id="LinkedBrandFactory" class="com.linedata.ekip.party.management.party.entity.factory.LinkedBrandFactory"></bean>
+    <bean id="BankAccountReferenceService" class="com.linedata.ekip.party.management.bankaccountreference.service.impl.BankAccountReferenceServiceImpl"></bean>
+    <bean id="AddressFileDao" class="com.linedata.ekip.std.services.changefolder.dao.impl.AddressFileDaoImpl"></bean>
+    <bean id="PartyArcAddWwDao" class="com.linedata.ekip.std.services.party.dao.impl.PartyArcAddWwDaoImpl"></bean>
+    <bean id="AddressReferenceFactory" class="com.linedata.ekip.std.services.entity.party.management.address.factory.AddressReferenceFactory"></bean>
+    <bean id="PartyArcAddWwModelFactory" class="com.linedata.ekip.std.services.party.model.PartyArcAddWwModelFactory"></bean>
+
+
+    <bean id="UserDao" class="com.linedata.ekip.std.services.setup.dao.impl.UserDaoImpl">
+        <property name="frameworkJdbcTemplate" ref="ekipDaoTemplate"/>
+        <property name="rowMapper" ref="UserRowMapper"/>
+
+        <property name="sqlInjector">
+            <bean class="org.apache.commons.io.IOUtils" factory-method="toString">
+                <constructor-arg type="java.io.InputStream" value="classpath:setup/sql/UserInjector.sql"/>
+            </bean>
+        </property>
+        <property name="beanFactory" ref="UserModelFactory"/>
+    </bean>
+    <bean id="ekipDaoTemplate" class="com.linedata.ekip.std.dao.core.EkipDaoTemplate">
+        <property name="dataSource" ref="backDataSource"/>
+    </bean>
+    <bean id="UserRowMapper" class="com.linedata.ekip.std.services.setup.dao.impl.UserRowMapper">
+        <property name="objectResultSetExtractor" ref="UserResultSetExtractor"/>
+    </bean>
+    <bean id="UserResultSetExtractor" class="com.linedata.ekip.std.services.setup.dao.impl.UserResultSetExtractor">
+        <property name="beanFactory" ref="UserModelFactory"/>
+    </bean>
+    <bean id="UserModelFactory" class="com.linedata.ekip.std.services.setup.model.UserModelFactory">
+        <property name="className" value="com.linedata.ekip.std.services.setup.model.impl.UserModelImpl"/>
+    </bean>
+</beans>

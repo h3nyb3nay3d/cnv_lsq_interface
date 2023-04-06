@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+      <property name="url" value="jdbc:oracle:thin:@CALLISTO:1521:DEVPRET1" />
+      <property name="username" value="ops$mdw" />
+      <property name="password" value="mdw" />
+   </bean>
+
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+
+   <bean id="ekipJdbcTemplate" class="com.linedata.framework.jdbc.core.DefaultJdbcTemplate">
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+
+
+   <alias name="ekipJdbcTemplate" alias="ApplicationJdbcTemplate" />
+
+   <bean id="QueryService" class="com.linedata.ekip.std.services.core.service.impl.QueryServiceImpl">
+      <property name="frameworkJdbcTemplate" ref="ekipJdbcTemplate" />
+      <property name="maxRowsAllowed" value="30" />
+   </bean>
+
+   <bean id="backDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+      <property name="url" value="jdbc:oracle:thin:@callisto:1521:DEVPRET1" />
+      <property name="username" value="ops$ingenetudes" />
+      <property name="password" value="galene" />
+   </bean>
+
+</beans>

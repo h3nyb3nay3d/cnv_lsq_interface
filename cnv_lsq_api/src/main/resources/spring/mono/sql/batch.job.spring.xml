@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+           http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/batch    http://www.springframework.org/schema/batch/spring-batch.xsd ">
+           
+<!--   <batch:job id="CreFlowGenerationJob">-->
+<!--      <batch:step id="CreFlowGenerationStep">-->
+<!--         <batch:tasklet>-->
+<!--            <batch:chunk reader="CreFlowGenerationSqlReader" writer="CreFlowGenerationWriter" commit-interval="2" />-->
+<!--         </batch:tasklet>-->
+<!--      </batch:step>-->
+<!--   </batch:job>-->
+<!--   <bean id="CreFlowGenerationWriter" class="com.linedata.ekip.batch.creflowgeneration.writer.CreFlowGenerationWriter" scope="step" />-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+   <bean id="CreFlowGenerationSqlReader" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+      <property name="dataSource" ref="dataSource" />
+      <property name="rowMapper">
+         <bean class="com.linedata.ekip.batch.creflowgeneration.data.mapper.TransactionRowMapper" />
+      </property>
+      <property name="sql">
+         <value><![CDATA[SELECT ID FROM EXT_TRANSACTION_FLUX_PARAMETER E]]></value>
+      </property>
+   </bean>
+
+   <bean id="AutoTransactionService" class="com.linedata.ekip.std.services.transaction.service.impl.AutoTransactionServiceImpl">
+      <property name="mapper" ref="TransactionBeanMapper"></property>
+   </bean>
+
+   <bean id="ekipDaoTemplate" class="com.linedata.framework.jdbc.core.DefaultJdbcTemplate">
+      <property name="dataSource" ref="backDataSource" />
+   </bean>
+
+   <bean id="ServiceSetup" class="com.linedata.ekip.core.server.setup.ServiceSetup" />
+   <alias name="ekipDaoTemplate" alias="ApplicationJdbcTemplate" />
+
+   <bean id="CommonMapper" class="com.linedata.ekip.std.services.core.bean.BeanMapper"/>
+
+
+   <!--     <bean class="org.springframework.beans.factory.config.MapFactoryBean" id="QueryBatchesMap">-->
+<!--      <property name="sourceMap">-->
+<!--         <map merge="true">-->
+<!--            <entry key="getParameterList">-->
+<!--               <bean factory-method="toString" class="org.apache.commons.io.IOUtils">-->
+<!--                  <constructor-arg type="java.io.InputStream" value="classpath:sql/FlowRequestParameterListSelector.sql" />-->
+<!--               </bean>-->
+<!--            </entry>-->
+<!--         </map>-->
+<!--      </property>-->
+<!--   </bean>-->
+
+</beans>
